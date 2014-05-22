@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<card>
+  <name>Test story 6</name>
+  <description>&lt;p&gt;This is a new test story&lt;/p&gt;</description>
+  <card_type url="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project/card_types/10.xml">
+    <name>Story</name>
+  </card_type>
+  <id type="integer">11</id>
+  <number type="integer">6</number>
+  <project url="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project.xml">
+    <name>test-project</name>
+    <identifier>test_project</identifier>
+  </project>
+  <version type="integer">6</version>
+  <project_card_rank type="integer">6</project_card_rank>
+  <created_on type="datetime">2014-05-09T11:32:07Z</created_on>
+  <modified_on type="datetime">2014-05-09T11:45:08Z</modified_on>
+  <modified_by url="https://count-xero.mingle.thoughtworks.com/api/v2/users/1.xml">
+    <name>james percy</name>
+    <login>james007percy</login>
+  </modified_by>
+  <created_by url="https://count-xero.mingle.thoughtworks.com/api/v2/users/1.xml">
+    <name>james percy</name>
+    <login>james007percy</login>
+  </created_by>
+  <properties type="array">
+    <property type_description="Managed number list" hidden="false">
+      <name>Estimate</name>
+      <value>1</value>
+    </property>
+    <property type_description="Managed text list" hidden="false">
+      <name>Status</name>
+      <value>In Dev</value>
+    </property>
+    <property type_description="Automatically generated from the team list" hidden="false">
+      <name>Developer</name>
+      <value nil="true"></value>
+    </property>
+    <property type_description="Managed number list" hidden="false">
+      <name>max estimate</name>
+      <value>2</value>
+    </property>
+    <property type_description="Any card used in tree" hidden="false">
+      <name>Release</name>
+      <value url="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project/cards/1.xml">
+        <number type="integer">1</number>
+      </value>
+    </property>
+    <property type_description="Any card used in tree" hidden="false">
+      <name>Iteration</name>
+      <value url="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project/cards/3.xml">
+        <number type="integer">3</number>
+      </value>
+    </property>
+  </properties>
+  <tags>
+  </tags>
+  <rendered_description url="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project/render?content_provider%5Bid%5D=11&amp;content_provider%5Btype%5D=card">
+  </rendered_description>
+</card>
