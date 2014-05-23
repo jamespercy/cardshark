@@ -1,10 +1,37 @@
 var cardshark = angular.module('cardshark', []);
 
 cardshark.controller('InputController', function InputController($scope) {
+	var cerCardUrl = '/api/v2/projects/rec_registry_redesign/cards/';
+	var username = 'james.percy';
+	var password = 'password1';
+	var host = 'mingle';
+	var port = '8081';
+
 	$scope.cards = [];
+	$scope.fetchCards = function() {
+		var cardNumbersToFetch = prepareNumbers($scope.cardString.split(','));
+		var fetchedCards = fetchCardsFromMingle(cardNumbersToFetch);
+
+		var fetchCardsFromMingle = function(numberStrings) {
+			numberStrings.forEach(fetchCard)
+			var fetchCardFromMingle = function(card) {
+				var request = new XMLHttpRequest();
+				request.open("GET", cerCardUrl + card + '.xml', false, username, password);
+			}
+		};
+	}
+
 	$scope.remove = function(cardNumber) {
 		console.log('removing ' + cardNumber);
 	};
+
+
+	var prepareNumbers = function(numberStrings) {
+		numberStrings.forEach(function(element, index) {
+			numberStrings[index] = element.trim();
+		});
+		return numberStrings;
+	}
 });
 
 
