@@ -2,23 +2,26 @@ var cardshark = angular.module('cardshark', []);
 
 cardshark.controller('InputController', function InputController($scope) {
 	var cerCardUrl = '/api/v2/projects/rec_registry_redesign/cards/';
-	var username = 'james.percy';
-	var password = 'password1';
 	var host = 'mingle';
 	var port = '8081';
 
 	$scope.cards = [];
 	$scope.fetchCards = function() {
 		var cardNumbersToFetch = prepareNumbers($scope.cardString.split(','));
-		var fetchedCards = fetchCardsFromMingle(cardNumbersToFetch);
-
-		var fetchCardsFromMingle = function(numberStrings) {
-			numberStrings.forEach(fetchCard)
-			var fetchCardFromMingle = function(card) {
-				var request = new XMLHttpRequest();
-				request.open("GET", cerCardUrl + card + '.xml', false, username, password);
-			}
-		};
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function() {
+		    if (request.readyState == 4) {
+		    	$scope.$apply(function () {
+            		$scope.cards = JSON.parse(request.responseText);
+        		});
+		        
+		    }
+		}
+		//request.open("GET", cerCardUrl + card + '.xml', false, username, password);
+		request.open('GET', 'http://localhost:9000/cards?' + cardNumbersToFetch, true);
+		request.setRequestHeader('Access-Control-Allow-Origin', 'true');
+    	request.setRequestHeader('Access-Control-Allow-Methods', 'GET');
+		request.send();
 	}
 
 	$scope.remove = function(cardNumber) {
@@ -28,9 +31,9 @@ cardshark.controller('InputController', function InputController($scope) {
 
 	var prepareNumbers = function(numberStrings) {
 		numberStrings.forEach(function(element, index) {
-			numberStrings[index] = element.trim();
+			numberStrings[index] = 'card=' + element.trim();
 		});
-		return numberStrings;
+		return numberStrings.join('&');
 	}
 });
 

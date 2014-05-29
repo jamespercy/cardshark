@@ -5,6 +5,8 @@ var _ = require('underscore')._;
 
 var app = express();
 
+app.use(express.static(__dirname + '/'));
+
 app.get('/cards', function(req, res){
 	var fetchedCards = [];
     console.log(req.query.card);
@@ -12,7 +14,7 @@ app.get('/cards', function(req, res){
 
 	var options = {
 	  host: 'mingle',
-	  auth: 'james.percy:password1',
+	  auth: 'james.percy:Babbage1@',
 	  port: '8081'
 	};
 	
@@ -44,8 +46,11 @@ app.get('/cards', function(req, res){
 		console.log(card);
 		fetchedCards.push(card);
 		if (fetchedCards.length === req.query.card.length) {
-			reportCards.sort();
-			res.send(reportCards());
+			fetchedCards.sort();
+			res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
+  			res.set('Access-Control-Allow-Methods', 'GET, POST');
+  			res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+			res.send(fetchedCards);
 		}
 	  });
 	}

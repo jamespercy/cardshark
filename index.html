@@ -31,12 +31,12 @@
                 <th>Card #</th>
                 <th>Status</th>
                 <th>Type</th>
+                <th>Bug Type</th>
                 <th>Feature</th>
                 <th>Name</th>
                 <th>Points</th>
                 <th>Developer</th>
-                <th>Release</th>
-                <th>Remove</th>
+                <th>Iteration</th>
             </tr>
         </thead>
 		    <tbody ng-repeat="card in cards">
@@ -44,16 +44,15 @@
 					<td><a href="{{card.url}}">{{card.number}}</a></td>
 					<td>{{card.properties['Status']}}</td>
 					<td>{{card.type}}</td>
-					<td>{{card.properties['Status']}}</td>
+					<td>{{card.properties['Bug Type']}}</td>
+					<td>{{card.properties['Planning Feature']}}</td>
 					<td>{{card.name}}</td>
 					<td>{{card.properties['Estimate']}}</td>
-					<td>{{card.properties['Developer']}}</td>
-					<td>{{card.properties['Release']}}</td>
-					<td><button class="btn btn-default" type="button" ng-click="remove(card.number)">Fetch cards</button></td>
+					<td>{{card.properties['Dev Owner']}}</td>
+					<td>{{card.properties['Iteration Completed']}}</td>
 				</tr>
     		</tbody>
 		</table>
 	</form>
-	<a href="https://count-xero.mingle.thoughtworks.com/api/v2/projects/test_project/cards/6.xml">card 6</a>
 </body>
 </html>
