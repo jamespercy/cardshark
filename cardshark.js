@@ -2,22 +2,52 @@ var express = require('express');
 var http = require('http');
 var DOMParser = require('xmldom').DOMParser;
 var _ = require('underscore')._;
+var fs = require('fs');
 
 var app = express();
 
 app.use(express.static(__dirname + '/'));
 
 app.get('/cards', function(req, res){
+
+	var Card = function() {};
+	Card.prototype.property = function(property) {
+		return (this.properties[property]) ? '"' + this.properties[property] + '"': '"N/A"';
+	};
+
+	Card.prototype.toCsv = function() {
+		return 	this.number + ',' +
+				this.property('Status') + ',' +
+				this.type + ',' +
+				this.property('Bug Type') + ',' +
+				this.property('Planning Feature') + ',' +
+				'"' + this.name + '",' +
+				this.property('Estimate') + ',' +
+				this.property('Dev Owner').replace('\n', '') + ',' +
+				this.property('Iteration Completed');
+	};
 	var fetchedCards = [];
+	
     console.log(req.query.card);
+    var user = req.query.username;
+    var password = req.query.password;
+
 	var cerCardUrl = '/api/v2/projects/rec_registry_redesign/cards/';
 
 	var options = {
 	  host: 'mingle',
-	  auth: 'james.percy:Babbage1@',
+	  auth: user + ':' + password,
 	  port: '8081'
 	};
-	
+
+	var cardsToCsv = function(fetchedCards) {
+		var result = "";
+		for (card in fetchedCards) {
+			result += fetchedCards[card].toCsv() + '\n';
+		}
+		return result;
+	};
+
 	function reportCards() {
 		var report = '<pre>';
 		_.each(fetchedCards, function(fc) {
@@ -50,6 +80,13 @@ app.get('/cards', function(req, res){
 			res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
   			res.set('Access-Control-Allow-Methods', 'GET, POST');
   			res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  			fs.writeFile("./report.csv", cardsToCsv(fetchedCards), function(err) {
+	  				    if(err) {
+					        console.log(err);
+					    } else {
+					        console.log("report.csv was saved!");
+					    }
+					});
 			res.send(fetchedCards);
 		}
 	  });
@@ -84,7 +121,7 @@ app.get('/cards', function(req, res){
 		var parser=new DOMParser();
 		var xmlDoc=parser.parseFromString(text,"text/xml");
 		var xmlCard = xmlDoc.getElementsByTagName('card')[0];
-		var card = {};
+		var card = new Card();
 		card.url = 'thecardsurl';
 		card.number = xmlCard.getElementsByTagName('number')[0].textContent;
 		card.name = xmlCard.getElementsByTagName('name')[0].textContent;

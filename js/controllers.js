@@ -18,7 +18,10 @@ cardshark.controller('InputController', function InputController($scope) {
 		    }
 		}
 		//request.open("GET", cerCardUrl + card + '.xml', false, username, password);
-		request.open('GET', 'http://localhost:9000/cards?' + cardNumbersToFetch, true);
+		request.open('GET', 'http://localhost:9000/cards?'
+			+ cardNumbersToFetch
+			+ '&username=' + $scope.username 
+			+ '&password=' + $scope.password, true);
 		request.setRequestHeader('Access-Control-Allow-Origin', 'true');
     	request.setRequestHeader('Access-Control-Allow-Methods', 'GET');
 		request.send();

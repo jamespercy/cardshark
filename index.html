@@ -8,51 +8,79 @@
 </head>
 <body ng-controller="InputController">
 	<form class="form-horizontal" role="form">
-		<div class="form-group">
+		<div class="form-group" ng-show="!loggedIn">
 			<div class="row">
 				<h1>Cardshark</h1>
 			</div>
 		  	<br>
-		  	
-			<div class="row">
-			  <div class="col-lg-6">
+		  	<div class = "row">
+			  <div class="col-sm-6">
 			    <div class="input-group">
-			    	<input type="text" class="form-control" id="cards" placeholder="card numbers separated by commas" ng-model="cardString">
-			      	<span class="input-group-btn">
-			        	<button class="btn btn-default" type="button" ng-click="fetchCards()">Fetch cards</button>
-			      	</span>
+			    	<label for="username">Mingle username</label>
+			    	<input type="text" class="form-control" id="username" ng-model="username">
 			    </div>
 			  </div>
 			</div>
+			<div class = "row">
+			  <div class="col-sm-6">
+			    <div class="input-group">
+			    	<label for="password">password</label>
+			    	<input type="password" class="form-control" id="password" ng-model="password">
+			    </div>
+			  </div>
+		  	</div>
+		  	<div class = "row">
+			  <div class="col-sm-6">
+			    <button class="form-control" id="login" ng-click="loggedIn = true">Log in</button>
+			  </div>
+		  	</div>
 		</div>
-		<table class="table table-hover">
-		<thead>
-			<tr>
-                <th>Card #</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Bug Type</th>
-                <th>Feature</th>
-                <th>Name</th>
-                <th>Points</th>
-                <th>Developer</th>
-                <th>Iteration</th>
-            </tr>
-        </thead>
-		    <tbody ng-repeat="card in cards">
+		<div id="logged-in-section" ng-show="loggedIn">
+			<div class="form-group">
+				<div class="row">
+					<h1>Cardshark</h1>
+				</div>
+		  	<br>
+				<div class="row">
+				  <div class="col-lg-6">
+				    <div class="input-group">
+				    	<input type="text" class="form-control" id="cards" placeholder="card numbers separated by commas" ng-model="cardString">
+				      	<span class="input-group-btn">
+				        	<button class="btn btn-default" type="button" ng-click="fetchCards()">Fetch cards</button>
+				      	</span>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<table class="table table-hover">
+			<thead>
 				<tr>
-					<td><a href="{{card.url}}">{{card.number}}</a></td>
-					<td>{{card.properties['Status']}}</td>
-					<td>{{card.type}}</td>
-					<td>{{card.properties['Bug Type']}}</td>
-					<td>{{card.properties['Planning Feature']}}</td>
-					<td>{{card.name}}</td>
-					<td>{{card.properties['Estimate']}}</td>
-					<td>{{card.properties['Dev Owner']}}</td>
-					<td>{{card.properties['Iteration Completed']}}</td>
-				</tr>
-    		</tbody>
-		</table>
+	                <th>Card #</th>
+	                <th>Status</th>
+	                <th>Type</th>
+	                <th>Bug Type</th>
+	                <th>Feature</th>
+	                <th>Name</th>
+	                <th>Points</th>
+	                <th>Developer</th>
+	                <th>Iteration</th>
+	            </tr>
+	        </thead>
+			    <tbody ng-repeat="card in cards">
+					<tr>
+						<td><a href="{{card.url}}">{{card.number}}</a></td>
+						<td>{{card.properties['Status']}}</td>
+						<td>{{card.type}}</td>
+						<td>{{card.properties['Bug Type']}}</td>
+						<td>{{card.properties['Planning Feature']}}</td>
+						<td>{{card.name}}</td>
+						<td>{{card.properties['Estimate']}}</td>
+						<td>{{card.properties['Dev Owner']}}</td>
+						<td>{{card.properties['Iteration Completed']}}</td>
+					</tr>
+	    		</tbody>
+			</table>
+		</div>
 	</form>
 </body>
 </html>
