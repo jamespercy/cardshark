@@ -9,13 +9,14 @@ var app = express();
 app.use(express.static(__dirname + '/'));
 
 app.get('/cards', function(req, res){
-
+    var iteration = undefined;
 	var Card = function() {};
 	Card.prototype.property = function(property) {
 		return (this.properties[property]) ? '"' + this.properties[property] + '"': '"N/A"';
 	};
 
 	Card.prototype.toCsv = function() {
+
 		return 	this.number + ',' +
 				this.property('Status') + ',' +
 				this.type + ',' +
@@ -80,7 +81,7 @@ app.get('/cards', function(req, res){
 			res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
   			res.set('Access-Control-Allow-Methods', 'GET, POST');
   			res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
-  			fs.writeFile("./report.csv", cardsToCsv(fetchedCards), function(err) {
+  			fs.writeFile('./Stream 1 Iteration ' + iteration + ' report - ' + new Date().getTime() + '.csv', cardsToCsv(fetchedCards), function(err) {
 	  				    if(err) {
 					        console.log(err);
 					    } else {
@@ -101,7 +102,6 @@ app.get('/cards', function(req, res){
 	
 	var parseText = function(text) {
 		function getProperties(xmlCard) {
-		//'card/properties/property',
 			var properties = {};
 			var propertiesElement = xmlCard.getElementsByTagName('properties')[0];
 			var propertyElements = propertiesElement.getElementsByTagName('property');
@@ -115,6 +115,9 @@ app.get('/cards', function(req, res){
 				}
 			}
 			console.log(JSON.stringify(properties));
+            if (!iteration && properties['Iteration Completed']) {
+                iteration = properties['Iteration Completed'];
+            }
 			return properties;
 		};
 
